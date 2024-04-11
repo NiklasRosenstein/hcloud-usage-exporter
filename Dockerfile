@@ -16,6 +16,6 @@ RUN --mount=type=cache,target=/tmp/cache/pdm,uid=1200 \
     export PDM_CACHE_DIR=/tmp/cache/pdm && \
     pdm install -v --no-lock
 
-COPY supervisord.conf /etc/supervisor/conf.d/hcloud-usage-metrics.conf
+COPY supervisord.conf /etc/supervisor/conf.d/hcloud-usage-exporter.conf
 
 # ENTRYPOINT [ "pdm", "run", "python", "main.py" ]

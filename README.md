@@ -1,4 +1,4 @@
-# hcloud-usage-metrics
+# hcloud-usage-exporter
 
 Exports HCloud usage as prometheus metrics.
 
@@ -8,5 +8,5 @@ docker run --rm \
     -e HCLOUD_USERNAME=... \
     -e HCLOUD_PASSWORD=... \
     -e HCLOUD_TOTP_SECRET=... \
-    ghcr.io/NiklasRosenstein/hcloud-usage-metrics
+    ghcr.io/NiklasRosenstein/hcloud-usage-exporter
 ```
