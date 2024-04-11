@@ -1,0 +1,20 @@
+[project]
+name = "hcloud-usage-metrics"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Niklas Rosenstein", email = "rosensteinniklas@gmail.com"},
+]
+dependencies = [
+    "selenium>=4.19.0",
+    "selenium-stealth>=1.0.6",
+    "pyotp>=2.9.0",
+    "prometheus-metrics>=0.1.6.6",
+]
+requires-python = "==3.11.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
