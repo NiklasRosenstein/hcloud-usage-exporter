@@ -1,3 +1,4 @@
+import os
 from argparse import ArgumentParser
 import logging
 from selenium import webdriver
@@ -14,7 +15,15 @@ logger = logging.getLogger(__name__)
 def create_driver() -> WebDriver:
     options = webdriver.ChromeOptions()
     options.add_argument("start-maximized")
-    # options.add_argument("--headless")
+    options.add_argument("disable-infobars")
+    options.add_argument("user-data-dir=.cookies")
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-setuid-sandbox")
+    options.add_argument("--disable-dev-shm-using")
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--remote-debugging-port=9222")  # Required to prevent "DevToolsActivePort file doesn't exist"
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
 
@@ -73,12 +82,19 @@ def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
     parser = ArgumentParser()
-    parser.add_argument("--username", type=str, required=True)
-    parser.add_argument("--password", type=str, required=True)
-    parser.add_argument("--totp-secret", type=str, required=True)
-    parser.add_argument("--interval", type=int, default=10)
+    parser.add_argument("--username", type=str, default=os.getenv("HCLOUD_USERNAME"))
+    parser.add_argument("--password", type=str, default=os.getenv("HCLOUD_PASSWORD"))
+    parser.add_argument("--totp-secret", type=str, default=os.getenv("HCLOUD_TOTP_SECRET"))
+    parser.add_argument("--interval", type=int, default=60)
     parser.add_argument("--metrics-port", type=int, default=3000)
     args = parser.parse_args()
+
+    logger.info("Arguments: %s", args)
+    if not args.username:
+        parser.error("Please provide a username via --username or HCLOUD_USERNAME")
+    if not args.password:
+        parser.error("Please provide a password via --password or HCLOUD_PASSWORD")
+
     start_http_server(args.metrics_port)
 
     login_counter = Counter("hcloud_logins", "Total logins")
