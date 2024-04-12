@@ -19,9 +19,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
       - name: Build docker image
         run: |
-          docker buildx build .\
+          docker buildx build . --push \
             --cache-from ghcr.io/niklasrosenstein/hcloud-usage-exporter:cache \
             --cache-to ghcr.io/niklasrosenstein/hcloud-usage-exporter:cache \
             -t ghcr.io/niklasrosenstein/hcloud-usage-exporter:latest
-      - name: Push docker image to GitHub
-        run: docker push ghcr.io/niklasrosenstein/hcloud-usage-exporter:latest
