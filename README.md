@@ -1,6 +1,6 @@
 # hcloud-usage-exporter
 
-Exports HCloud usage as prometheus metrics.
+Exports HCloud usage as prometheus metrics. Uses Selenium to scrape the data from the Hetzner Cloud web interface.
 
 ```
 docker run --rm \
@@ -9,5 +9,5 @@ docker run --rm \
     -e HCLOUD_USERNAME=... \
     -e HCLOUD_PASSWORD=... \
     -e HCLOUD_TOTP_SECRET=... \
-    ghcr.io/NiklasRosenstein/hcloud-usage-exporter
+    ghcr.io/niklasrosenstein/hcloud-usage-exporter
 ```

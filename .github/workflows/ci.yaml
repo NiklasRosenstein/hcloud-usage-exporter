@@ -7,9 +7,16 @@ on:
     branches:
       - develop
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: niklasrosenstein/hcloud-usage-exporter
+
 jobs:
   image:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -20,6 +27,6 @@ jobs:
       - name: Build docker image
         run: |
           docker buildx build . --push \
-            --cache-from ghcr.io/niklasrosenstein/hcloud-usage-exporter:cache \
-            --cache-to ghcr.io/niklasrosenstein/hcloud-usage-exporter:cache \
-            -t ghcr.io/niklasrosenstein/hcloud-usage-exporter:latest
+            --cache-from ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cache \
+            --cache-to ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cache \
+            -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
