@@ -15,9 +15,11 @@ jobs:
         uses: actions/checkout@v2
       - name: Login
         run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v1
       - name: Build docker image
         run: |
-          docker build .\
+          docker buildx build .\
             --cache-from ghcr.io/niklasrosenstein/hcloud-usage-exporter:cache \
             --cache-to ghcr.io/niklasrosenstein/hcloud-usage-exporter:cache \
             -t ghcr.io/niklasrosenstein/hcloud-usage-exporter:latest
