@@ -1,0 +1,22 @@
+name: CI
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  # Build docker image
+  image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build docker image
+        run: docker build -t my-image .
+      - name: Push docker image to GitHub
+        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - run: docker tag my-image ghcr.io/niklasrosenstein/hcloud-usage-exporter:latest
+      - run: docker push ghcr.io/niklasrosenstein/hcloud-usage-exporter:latest
