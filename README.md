@@ -38,3 +38,8 @@ Considering granting the pod a larger `/dev/shm` volume, or mount the host's `/d
 ### Service logs
 
 You can find them under `/var/log/supervisor/hcloud-usage-exporter*.log`.
+
+### Inspect page state on error
+
+A history of the five last page loads are stored in `/var/lib/hcloud-usage-exporter/error-history`, allowing you
+to inspect the screenshot and page source when an error occurs.
