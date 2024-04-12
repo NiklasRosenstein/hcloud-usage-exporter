@@ -97,9 +97,10 @@ def main() -> None:
 
     start_http_server(args.metrics_port)
 
-    login_counter = Counter("hcloud_logins", "Total logins")
-    usage_gauge = Gauge(f"hcloud_usage_total", "Total usage for project {project_name}", ["project_name"])
+    login_counter = Counter("hcloud_usage_logins", "Total logins")
+    fetch_counter = Counter("hcloud_usage_fetches", "Total fetches")
     error_counter = Counter(f"hcloud_usage_errors", f"Total errors while fetching usage")
+    usage_gauge = Gauge(f"hcloud_usage_total_eur", "Total usage in EUR for project {project_name}", ["project_name"])
 
     totp = TOTP(args.totp_secret).now() if args.totp_secret else None
     client = HCloudClient(create_driver())
@@ -110,6 +111,7 @@ def main() -> None:
     while True:
         try:
             usage = client.get_usage()
+            fetch_counter.inc()
             logger.info("Usage summary: %s", usage)
             for project_name, total in usage:
                 usage_gauge.labels(project_name=project_name).set(total)
