@@ -95,6 +95,8 @@ class PageSnapshotter:
         self._max_history = max_history
 
     def capture(self, driver: WebDriver) -> Path:
+        self._path.mkdir(parents=True, exist_ok=True)
+
         timestamp = time.strftime("%Y-%m-%d_%H-%M-%S")
         path = self._path / f"{timestamp}.png"
         driver.save_screenshot(str(path))
