@@ -2,12 +2,22 @@
 
 <h1 align="center">hcloud-usage-exporter</h1>
 
-<p align="center">Export HCloud cost totals as prometheus metrics.</br>
-Uses Selenium to scrape the data from the Hetzner Cloud web interface.</p>
+<p align="center">Export HCloud cost totals as Prometheus metrics. Uses Selenium to scrape data from the Hetzner Cloud
+web interface.</p>
 
 ## Usage
 
-```
+* The container image is available from `ghcr.io/niklasrosenstein/hcloud-usage-exporter`.
+* The exporter listens on port `3000` and serves metrics at `/`.
+* The exporter requires the following environment variables:
+  * `HCLOUD_USERNAME`: The Hetzner Cloud username.
+  * `HCLOUD_PASSWORD`: The Hetzner Cloud password.
+  * `HCLOUD_TOTP_SECRET`: The Hetzner Cloud TOTP secret, if two-factor authentication is enabled.
+* The default scrape interval is 5 minutes.
+
+__Example__
+
+```bash
 $ docker run --rm -d \
     -p 3000:3000 \
     -v /dev/shm:/dev/shm \
@@ -19,15 +29,11 @@ $ curl localhost:3000
 ...
 ```
 
-## Exported metrics
+## Metrics
 
-### Gauge `hcloud_usage_total_eur{project_name="...",}`
-
-The total cost of the project in EUR.
-
-### Counter `hcloud_usage_logins`
-### Counter `hcloud_usage_fetches`
-### Counter `hcloud_usage_errors`
+* `hcloud_usage_exporter_project_cost_eur{project_name}`
+* `hcloud_usage_exporter_state{hcloud_usage_exporter_state="pending|healthy|error}`
+* ... todo
 
 ## Troubleshooting
 
