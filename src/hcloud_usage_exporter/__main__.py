@@ -85,7 +85,7 @@ def main() -> None:
     parser.add_argument("--username", type=str, default=os.getenv("HCLOUD_USERNAME"))
     parser.add_argument("--password", type=str, default=os.getenv("HCLOUD_PASSWORD"))
     parser.add_argument("--totp-secret", type=str, default=os.getenv("HCLOUD_TOTP_SECRET"))
-    parser.add_argument("--interval", type=int, default=60)
+    parser.add_argument("--interval", type=int, default=300)
     parser.add_argument("--metrics-port", type=int, default=3000)
     args = parser.parse_args()
 
