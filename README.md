@@ -48,4 +48,10 @@ You can find them under `/var/log/supervisor/hcloud-usage-exporter*.log`.
 ### Inspect page state on error
 
 A history of the five last page loads are stored in `/var/lib/hcloud-usage-exporter/error-history`, allowing you
-to inspect the screenshot and page source when an error occurs.
+to inspect the screenshot and page source when an error occurs. The easiest way to inspect these files is to send them
+to a service like [file.io](https://file.io).
+
+```bash
+$ cd /var/lib/hcloud-usage-exporter/error-history
+$ curl -F file=@2024-04-13_19-25-39.png https://file.io
+```
